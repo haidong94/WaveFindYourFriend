@@ -33,14 +33,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:layout_margin="20dp"
+        android:layout_margin="5dp"
         android:orientation="vertical">
 
         <ImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/margin_default"
+
             android:src="@drawable/ic_phone" />
 
         <EditText
@@ -61,7 +61,6 @@
             android:id="@+id/edt_number_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_default"
             android:layout_marginLeft="@dimen/margin_top_default"
             android:layout_marginRight="@dimen/margin_top_default"
             android:layout_marginTop="8dp"
@@ -72,21 +71,50 @@
             android:textStyle="bold"
             android:theme="@style/MyEditTextTheme" />
 
+        <EditText
+            android:id="@+id/edt_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_top_default"
+            android:layout_marginRight="@dimen/margin_top_default"
+            android:layout_marginTop="8dp"
+            android:drawableRight="@drawable/icon_password"
+            android:hint="PASS"
+            android:inputType="textPassword"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:theme="@style/MyEditTextTheme" />
+        <CheckBox
+            android:id="@+id/cb_ShowPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorPrimary"
+            android:text="Show Password" />
+
         <TextView
             android:textSize="@dimen/txt_size_default"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_default"
             android:text="@string/txt_privacy"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
             android:textStyle="italic" />
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:textColor="@color/colorPrimary"
+            android:textAlignment="center"/>
 
     </LinearLayout>
 
+
     <Button
+        android:id="@+id/btn_continue"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="30dp"
         android:background="@color/colorPrimary"
         android:layout_alignParentBottom="true"
         android:text="CONTINUE"

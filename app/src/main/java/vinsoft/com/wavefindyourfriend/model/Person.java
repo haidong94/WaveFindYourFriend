@@ -9,14 +9,14 @@ public class Person {
     String name;
     String pass;
     String sex;
-    String image;
+    String avatar;
 
     public String getImage() {
-        return image;
+        return avatar;
     }
 
     public void setImage(String image) {
-        this.image = image;
+        this.avatar = image;
     }
 
     public String getSex() {
