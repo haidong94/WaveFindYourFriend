@@ -40,56 +40,65 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-
             android:src="@drawable/ic_phone" />
 
-        <EditText
-            android:id="@+id/edt_zone_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_top_default"
-            android:layout_marginRight="@dimen/margin_top_default"
-            android:drawableRight="@mipmap/ic_choose_zone"
-            android:editable="false"
-            android:text="VIETNAM +84"
-            android:textAllCaps="true"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
-            android:theme="@style/MyEditTextTheme" />
 
-        <EditText
-            android:id="@+id/edt_number_phone"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_top_default"
-            android:layout_marginRight="@dimen/margin_top_default"
-            android:layout_marginTop="8dp"
-            android:drawableRight="@drawable/ic_phone_call"
-            android:hint="PHONE NUMBER"
-            android:inputType="phone"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
-            android:theme="@style/MyEditTextTheme" />
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/edt_zone_phone"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginLeft="@dimen/margin_top_default"
+                android:layout_marginRight="@dimen/margin_top_default"
+                android:drawableRight="@mipmap/ic_choose_zone"
+                android:editable="false"
+                android:text="VIETNAM +84"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+                <EditText
+                    android:id="@+id/edt_number_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="@dimen/margin_top_default"
+                    android:layout_marginRight="@dimen/margin_top_default"
+                    android:drawableRight="@drawable/ic_phone_call"
+                    android:hint="PHONE NUMBER"
+                    android:inputType="phone"
+                    android:textColorHint="@color/colorPrimary" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/pass"
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+                <EditText
+                    android:id="@+id/edt_pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="@dimen/margin_top_default"
+                    android:layout_marginRight="@dimen/margin_top_default"
+                    android:drawableRight="@drawable/icon_password"
+                    android:hint="PASS"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textStyle="bold" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/edt_pass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_top_default"
-            android:layout_marginRight="@dimen/margin_top_default"
-            android:layout_marginTop="8dp"
-            android:drawableRight="@drawable/icon_password"
-            android:hint="PASS"
-            android:inputType="textPassword"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
-            android:theme="@style/MyEditTextTheme" />
         <CheckBox
             android:id="@+id/cb_ShowPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:textColor="@color/colorPrimary"
+            android:layout_gravity="right"
+            android:layout_marginRight="5dp"
             android:text="Show Password" />
 
         <TextView
@@ -104,7 +113,9 @@
             android:id="@+id/tv_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="Register"
+            android:textStyle="bold"
             android:textColor="@color/colorPrimary"
             android:textAlignment="center"/>
 

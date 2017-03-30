@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "714868155219",
+    "firebase_url": "https://chatandmap.firebaseio.com",
+    "project_id": "chatandmap",
+    "storage_bucket": "chatandmap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714868155219:android:7fb487ab65848da0",
+        "android_client_info": {
+          "package_name": "haidong.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "714868155219-l1fhfel2jj91fefgtbebev0ggp3en8r9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGFCorAN1Jyaj5-n6ozwhEFHerxk5Ccyw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714868155219:android:dde54b8e6944f17c",
+        "android_client_info": {
+          "package_name": "vinsoft.com.wavefindyourfriend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "714868155219-l1fhfel2jj91fefgtbebev0ggp3en8r9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGFCorAN1Jyaj5-n6ozwhEFHerxk5Ccyw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

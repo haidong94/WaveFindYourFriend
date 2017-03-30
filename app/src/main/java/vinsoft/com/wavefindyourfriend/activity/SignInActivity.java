@@ -2,9 +2,11 @@ package vinsoft.com.wavefindyourfriend.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +37,7 @@ public class SignInActivity extends AppCompatActivity {
     Firebase roof;
     String key;
     public static Person person=new Person();
+    TextInputLayout layout_phone,layout_pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,8 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void addControl() {
+        layout_phone= (TextInputLayout) findViewById(R.id.phone);
+        layout_pass= (TextInputLayout) findViewById(R.id.pass);
         edt_number_phone= (EditText) findViewById(R.id.edt_number_phone);
         edt_pass= (EditText) findViewById(R.id.edt_pass);
         cb_ShowPassword= (CheckBox) findViewById(R.id.cb_ShowPassword);
@@ -82,6 +87,7 @@ public class SignInActivity extends AppCompatActivity {
         btn_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 login();
 
             }
@@ -92,38 +98,48 @@ public class SignInActivity extends AppCompatActivity {
     private void login() {
         final String phone = edt_number_phone.getText().toString();
         final String pass = edt_pass.getText().toString();
-        roof.child("database").child("Person").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        if(TextUtils.isEmpty(phone))
+            layout_phone.setError(getResources().getString(R.string.EmptyPhone));
+        else
+            layout_phone.setErrorEnabled(false);
+        if(TextUtils.isEmpty(pass))
+            layout_pass.setError(getResources().getString(R.string.EmptyPass));
+        else
+            layout_pass.setErrorEnabled(false);
 
-                int condition=0;
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Person c =  postSnapshot.getValue(Person.class);
-                    key=postSnapshot.getKey();
-                    if(c.getId()==Integer.parseInt(phone)&&c.getPass().equals(pass)){
-                        person.setId(Integer.parseInt(phone));
-                        person.setPass(pass);
-                        condition=1;
-                        break;
+        if(!TextUtils.isEmpty(phone)&&!TextUtils.isEmpty(pass))
+            roof.child("database").child("Person").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    int condition=0;
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Person c =  postSnapshot.getValue(Person.class);
+                        key=postSnapshot.getKey();
+                        if(c.getId()==Integer.parseInt(phone)&&c.getPass().equals(pass)){
+                            person.setId(Integer.parseInt(phone));
+                            person.setPass(pass);
+                            condition=1;
+                            break;
+                        }
                     }
+                    if(condition==1){
+                        Toast.makeText(SignInActivity.this,"Đăng nhập thành công",Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(SignInActivity.this,ImageActivity.class);
+                        intent.putExtra("key",key);
+                        startActivity(intent);
+                    }
+
+
+                    else
+                        Toast.makeText(SignInActivity.this,"Tài khoản không đúng| Vui lòng chọn tài khoản khác",Toast.LENGTH_SHORT).show();
+
                 }
-                if(condition==1){
-                    Toast.makeText(SignInActivity.this,"Đăng nhập thành công",Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(SignInActivity.this,ImageActivity.class);
-                    intent.putExtra("key",key);
-                    startActivity(intent);
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
                 }
-
-
-                else
-                    Toast.makeText(SignInActivity.this,"Tài khoản không đúng| Vui lòng chọn tài khoản khác",Toast.LENGTH_SHORT).show();
-
-            }
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
+            });
     }
 
     private void dialogRegister() {

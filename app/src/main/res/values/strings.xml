@@ -11,4 +11,6 @@
     <string name="txt_privacy">This is the only and therefore most important step in the registration process as your phone number will be the unique id for Buy installing DKWAVE you agree to our privacy policy</string>
     <string name="tiele">cho phep truy cap</string>
     <string name="message">can su cho phep</string>
+    <string name="EmptyPhone">Enter your phone number</string>
+    <string name="EmptyPass">Enter your password</string>
 </resources>
