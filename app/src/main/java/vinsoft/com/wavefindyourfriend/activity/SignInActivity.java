@@ -124,15 +124,15 @@ public class SignInActivity extends AppCompatActivity {
                         }
                     }
                     if(condition==1){
-                        Toast.makeText(SignInActivity.this,"Đăng nhập thành công",Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(SignInActivity.this,ImageActivity.class);
+                        Toast.makeText(SignInActivity.this,getResources().getString(R.string.LoginSuccesfull),Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(SignInActivity.this,ChooseAvatarActivity.class);
                         intent.putExtra("key",key);
                         startActivity(intent);
                     }
 
 
                     else
-                        Toast.makeText(SignInActivity.this,"Tài khoản không đúng| Vui lòng chọn tài khoản khác",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignInActivity.this,getResources().getString(R.string.phoneIncorrect ),Toast.LENGTH_SHORT).show();
 
                 }
                 @Override
@@ -149,20 +149,8 @@ public class SignInActivity extends AppCompatActivity {
         final EditText ed_password = (EditText) alertLayout.findViewById(R.id.ed_password);
         final EditText ed_name = (EditText) alertLayout.findViewById(R.id.ed_name);
 
-        //RadioButton rad=(RadioButton) findViewById(id);
+
         final RadioGroup radioGroup = (RadioGroup) alertLayout.findViewById(R.id.radioGroup);
-
-//        cbShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked)
-//                    etPassword.setTransformationMethod(null);
-//                else
-//                    etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-//            }
-//        });
-
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Register");
         alert.setView(alertLayout);
@@ -171,7 +159,7 @@ public class SignInActivity extends AppCompatActivity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                makeText(getBaseContext(), "Cancel clicked", Toast.LENGTH_SHORT).show();
+                makeText(getBaseContext(), getResources().getString(R.string.CancelClick), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -206,7 +194,7 @@ public class SignInActivity extends AppCompatActivity {
                                 //c.setCustomer_ID(key);
                                 if(c.getId()==person.getId()&&condition==1){
                                     condition++;//condition=2
-                                    Toast.makeText(SignInActivity.this, "So dien thoai da dung", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignInActivity.this, getResources().getString(R.string.PhoneUsed), Toast.LENGTH_SHORT).show();
                                     break;
                                 }
 
@@ -221,9 +209,9 @@ public class SignInActivity extends AppCompatActivity {
                             String s=roof.child("database").child("Person").push().getKey();
                             roof.child("database").child("Person").child(s).setValue(person);
 
-                            Toast.makeText(SignInActivity.this, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignInActivity.this, getResources().getString(R.string.LoginSuccesfull), Toast.LENGTH_SHORT).show();
                             condition++;//condition=2
-                            Intent intent=new Intent(SignInActivity.this,ImageActivity.class);
+                            Intent intent=new Intent(SignInActivity.this,ChooseAvatarActivity.class);
                             startActivity(intent);
 
                             finish();

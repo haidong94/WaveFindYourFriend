@@ -13,4 +13,8 @@
     <string name="message">can su cho phep</string>
     <string name="EmptyPhone">Enter your phone number</string>
     <string name="EmptyPass">Enter your password</string>
+    <string name="LoginSuccesfull">Loggin Successfully</string>
+    <string name="PhoneUsed">Phone number used</string>
+    <string name="CancelClick">Cancel clicked</string>
+    <string name="phoneIncorrect">The phone number is incorrect</string>
 </resources>
