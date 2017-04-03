@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +24,16 @@
 
         </activity>
         <activity android:name=".activity.SignInActivity">
+
+        </activity>
+
+        <activity android:name=".activity.ChooseAvatarActivity"/>
+
+        <activity android:name=".activity.ContactFriendActivity">
+
+            </activity>
+
+        <activity android:name=".activity.MapsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,9 +41,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.ChooseAvatarActivity"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCk7zyedyHlJSOs7433QuDzUzB4ZBLNbew"/>
 
-        <activity android:name=".activity.ContactFriendActivity"/>
     </application>
+
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
+
+
+
 
 </manifest>

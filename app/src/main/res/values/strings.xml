@@ -17,4 +17,6 @@
     <string name="PhoneUsed">Phone number used</string>
     <string name="CancelClick">Cancel clicked</string>
     <string name="phoneIncorrect">The phone number is incorrect</string>
+    <string name="contact">Danh Bạ</string>
+    <string name="Location">Location</string>
 </resources>

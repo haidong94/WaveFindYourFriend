@@ -36,8 +36,11 @@ public class SignInActivity extends AppCompatActivity {
     Button btn_continue;
     Firebase roof;
     String key;
+    MyLogin mListener;
     public static Person person=new Person();
     TextInputLayout layout_phone,layout_pass;
+     String phone;
+     String pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         getSupportActionBar().hide();
+        mListener=new MyLogin();
 
         Firebase.setAndroidContext(this);
         roof=new Firebase("https://chatandmap.firebaseio.com");
@@ -96,8 +100,8 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void login() {
-        final String phone = edt_number_phone.getText().toString();
-        final String pass = edt_pass.getText().toString();
+        phone = edt_number_phone.getText().toString();
+        pass = edt_pass.getText().toString();
         if(TextUtils.isEmpty(phone))
             layout_phone.setError(getResources().getString(R.string.EmptyPhone));
         else
@@ -108,38 +112,7 @@ public class SignInActivity extends AppCompatActivity {
             layout_pass.setErrorEnabled(false);
 
         if(!TextUtils.isEmpty(phone)&&!TextUtils.isEmpty(pass))
-            roof.child("database").child("Person").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    int condition=0;
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Person c =  postSnapshot.getValue(Person.class);
-                        key=postSnapshot.getKey();
-                        if(c.getId()==Integer.parseInt(phone)&&c.getPass().equals(pass)){
-                            person.setId(Integer.parseInt(phone));
-                            person.setPass(pass);
-                            condition=1;
-                            break;
-                        }
-                    }
-                    if(condition==1){
-                        Toast.makeText(SignInActivity.this,getResources().getString(R.string.LoginSuccesfull),Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(SignInActivity.this,ChooseAvatarActivity.class);
-                        intent.putExtra("key",key);
-                        startActivity(intent);
-                    }
-
-
-                    else
-                        Toast.makeText(SignInActivity.this,getResources().getString(R.string.phoneIncorrect ),Toast.LENGTH_SHORT).show();
-
-                }
-                @Override
-                public void onCancelled(FirebaseError firebaseError) {
-
-                }
-            });
+            roof.child("database").child("Person").addValueEventListener(mListener);
     }
 
     private void dialogRegister() {
@@ -189,9 +162,9 @@ public class SignInActivity extends AppCompatActivity {
                             person.setPass(pass);
                             person.setSex(sex);
                             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                //String key=postSnapshot.getKey();
+
                                 Person c =  postSnapshot.getValue(Person.class);
-                                //c.setCustomer_ID(key);
+
                                 if(c.getId()==person.getId()&&condition==1){
                                     condition++;//condition=2
                                     Toast.makeText(SignInActivity.this, getResources().getString(R.string.PhoneUsed), Toast.LENGTH_SHORT).show();
@@ -233,5 +206,43 @@ public class SignInActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    class MyLogin implements ValueEventListener {
 
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            int condition=0;
+            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                Person c =  postSnapshot.getValue(Person.class);
+                key=postSnapshot.getKey();
+                if(c.getId()==Integer.parseInt(phone)&&c.getPass().equals(pass)){
+                    person.setId(Integer.parseInt(phone));
+                    person.setPass(pass);
+                    condition=1;
+                    break;
+                }
+            }
+            if(condition==1){
+                Toast.makeText(SignInActivity.this,getResources().getString(R.string.LoginSuccesfull),Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(SignInActivity.this,ChooseAvatarActivity.class);
+                intent.putExtra("key",key);
+                startActivity(intent);
+                finish();
+            }
+
+
+            else
+                Toast.makeText(SignInActivity.this,getResources().getString(R.string.phoneIncorrect ),Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancelled(FirebaseError firebaseError) {
+
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        roof.child("database").child("Person").removeEventListener(mListener);
+    }
 }

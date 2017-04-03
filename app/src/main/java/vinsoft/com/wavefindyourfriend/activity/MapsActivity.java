@@ -45,6 +45,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
 import vinsoft.com.wavefindyourfriend.R;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -55,31 +57,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     private GoogleApiClient mGoogleApiClient;
     Firebase roof;
+    TextView tvlocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        tvlocation= (TextView) findViewById(R.id.tv_location);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-
-//        Firebase.setAndroidContext(this);
-//        roof = new Firebase("https://chatandmap.firebaseio.com");
-//        roof.child("database").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(FirebaseError firebaseError) {
-//
-//            }
-//        });
-
 
     }
 
@@ -188,27 +176,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void getCurentLocation() {
-        //get curren location
-        LocationManager locationManager = (LocationManager)
-                getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+        Log.d("Find Location", "in find_location");
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        List<String> providers = locationManager.getProviders(true);
+        for (String provider : providers) {
+            locationManager.requestLocationUpdates(provider, 1000, 0,
+                    new LocationListener() {
+
+                        public void onLocationChanged(Location location) {
+                            tvlocation.setText("vi tri"+location.getLatitude()+","+location.getLongitude());
+                        }
+
+                        public void onProviderDisabled(String provider) {}
+
+                        public void onProviderEnabled(String provider) {}
+
+                        public void onStatusChanged(String provider, int status,
+                                                    Bundle extras) {}
+                    });
+            Location location = locationManager.getLastKnownLocation(provider);
+            if (location != null) {
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+                tvlocation.setText("vi tri"+latitude+","+longitude);
+            }
         }
-        Location location = locationManager.getLastKnownLocation(locationManager
-                .getBestProvider(criteria, false));
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
-        TextView tvlocation= (TextView) findViewById(R.id.tv_location);
-        tvlocation.setText("vi tri"+latitude+","+longitude);
     }
 
 
