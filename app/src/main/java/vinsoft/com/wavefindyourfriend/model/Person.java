@@ -5,7 +5,7 @@ package vinsoft.com.wavefindyourfriend.model;
  */
 
 public class Person {
-    int id;
+    String id;
     String name;
     String pass;
     String sex;
@@ -14,7 +14,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(int id, String name){
+    public Person(String id, String name){
         this.id=id;
         this.name=name;
     }
@@ -48,11 +48,11 @@ public class Person {
 
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

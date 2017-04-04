@@ -1,5 +1,6 @@
-package vinsoft.com.wavefindyourfriend.activity;
+package vinsoft.com.wavefindyourfriend.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -12,12 +13,14 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,15 +35,16 @@ import java.util.List;
 import java.util.Map;
 
 import vinsoft.com.wavefindyourfriend.R;
+import vinsoft.com.wavefindyourfriend.activity.SignInActivity;
 import vinsoft.com.wavefindyourfriend.adapter.RecyclerContactAdapter;
 import vinsoft.com.wavefindyourfriend.model.Contact;
 import vinsoft.com.wavefindyourfriend.model.Person;
 
 /**
- * Created by DONG on 30-Mar-17.
+ * Created by DONG on 04-Apr-17.
  */
 
-public class ContactFriendActivity extends AppCompatActivity{
+public class ContactFragment extends Fragment {
     private static final int MY_PERMISSIONS_REQUEST =123 ;
     RecyclerView recyclerView;
     LinearLayout ln;
@@ -49,19 +53,17 @@ public class ContactFriendActivity extends AppCompatActivity{
     ArrayList<Contact> listContact;
 
     ArrayList<String> listFriend;
-    ArrayList<String> listPerson;
     Firebase roof;
     TextView txtLocation;
     double latitude,longitude;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact);
-
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.activity_contact,container,false);
         checkPermission();
 
-        addControl();
+        addControl(view);
         readAllContactFromPhone();
         getLocationChanged();
         setLocationFirebase();
@@ -69,7 +71,10 @@ public class ContactFriendActivity extends AppCompatActivity{
         addFriendFirebase();
         writeFriendFirebase();
 
+
+        return view;
     }
+
 
     private void addFriendFirebase() {
         roof.child("database").child("Person").addValueEventListener(new ValueEventListener() {
@@ -110,9 +115,9 @@ public class ContactFriendActivity extends AppCompatActivity{
                 ln.setVisibility(View.GONE);
 
                 recyclerView.setHasFixedSize(true);
-                linearLayoutManager = new LinearLayoutManager(ContactFriendActivity.this);
+                linearLayoutManager = new LinearLayoutManager(getContext());
                 recyclerView.setLayoutManager(linearLayoutManager);
-                recyclerContactAdapter = new RecyclerContactAdapter(ContactFriendActivity.this,listContact,listFriend);
+                recyclerContactAdapter = new RecyclerContactAdapter(getContext(),listContact,listFriend);
                 recyclerView.setAdapter(recyclerContactAdapter);
             }
 
@@ -123,14 +128,14 @@ public class ContactFriendActivity extends AppCompatActivity{
     }
 
 
-    private void addControl() {
+    private void addControl(View view) {
         listContact=new ArrayList<Contact>();
         listFriend=new ArrayList<String>();
-        recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        txtLocation= (TextView) findViewById(R.id.txtLocation);
-        ln = (LinearLayout) findViewById(R.id.rlt);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
+        txtLocation= (TextView) view.findViewById(R.id.txtLocation);
+        ln = (LinearLayout) view.findViewById(R.id.rlt);
 
-        Firebase.setAndroidContext(this);
+        Firebase.setAndroidContext(view.getContext());
         roof=new Firebase("https://chatandmap.firebaseio.com");
     }
 
@@ -140,26 +145,26 @@ public class ContactFriendActivity extends AppCompatActivity{
                 android.Manifest.permission.READ_PHONE_STATE};
         boolean isOn = false;
 
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.GET_ACCOUNTS) == PackageManager.PERMISSION_GRANTED) {
-           // textStatus1.setText("On");
+        if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.GET_ACCOUNTS) == PackageManager.PERMISSION_GRANTED) {
+            // textStatus1.setText("On");
         } else {
-           // textStatus1.setText("Off");
+            // textStatus1.setText("Off");
             isOn = true;
         }
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
-           // textStatus2.setText("On");
+        if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
+            // textStatus2.setText("On");
         } else {
-           // textStatus2.setText("Off");
+            // textStatus2.setText("Off");
             isOn = true;
         }
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-           // textStatus3.setText("On");
+        if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+            // textStatus3.setText("On");
         } else {
             //textStatus3.setText("Off");
             isOn = true;
         }
         if (isOn){
-            ActivityCompat.requestPermissions(this, listPermission, MY_PERMISSIONS_REQUEST);
+            ActivityCompat.requestPermissions((Activity) getContext(), listPermission, MY_PERMISSIONS_REQUEST);
         }
     }
 
@@ -170,21 +175,21 @@ public class ContactFriendActivity extends AppCompatActivity{
                 switch (i) {
                     case 0:
                         if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                           // textStatus1.setText("On");
+                            // textStatus1.setText("On");
                         } else {
                             //textStatus1.setText("Off");
                         }
                         break;
                     case 1:
                         if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                           // textStatus2.setText("On");
+                            // textStatus2.setText("On");
                         } else {
-                           // textStatus2.setText("Off");
+                            // textStatus2.setText("Off");
                         }
                         break;
                     case 2:
                         if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                           // textStatus3.setText("On");
+                            // textStatus3.setText("On");
                         } else {
                             //textStatus3.setText("Off");
                         }
@@ -203,7 +208,7 @@ public class ContactFriendActivity extends AppCompatActivity{
 //        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, ContactsContract.Contacts.DISPLAY_NAME + " ASC ");
 //        String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
 
-        Cursor cursor=getContentResolver().query(uri, null, null,null, ContactsContract.Contacts.DISPLAY_NAME + " ASC");
+        Cursor cursor=getContext().getContentResolver().query(uri, null, null,null, ContactsContract.Contacts.DISPLAY_NAME + " ASC");
 
         //listContact.clear();
         while (cursor.moveToNext()){
@@ -230,14 +235,14 @@ public class ContactFriendActivity extends AppCompatActivity{
                     listContact.add(contact);
             }
         }
-     //   recyclerContactAdapter.notifyDataSetChanged();
+        //   recyclerContactAdapter.notifyDataSetChanged();
 
     }
 
 
     public void getLocationChanged(){
         Log.d("Find MyLocation", "in find_location");
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
         List<String> providers = locationManager.getProviders(true);
         for (String provider : providers) {
             Location location = locationManager.getLastKnownLocation(provider);
@@ -275,5 +280,4 @@ public class ContactFriendActivity extends AppCompatActivity{
         roof.child("database").child("Location").child(SignInActivity.person.getId()).updateChildren(childUpdates);
 
     }
-
 }

@@ -61,8 +61,8 @@ public class ChooseAvatarActivity extends AppCompatActivity implements ProfileFr
 
         Firebase.setAndroidContext(this);
         roof=new Firebase("https://chatandmap.firebaseio.com");
-        Intent intent=getIntent();
-        key= intent.getStringExtra("key");
+//        Intent intent=getIntent();
+//        key= intent.getStringExtra("key");
         addControl();
         addEvent();
 
@@ -77,7 +77,29 @@ public class ChooseAvatarActivity extends AppCompatActivity implements ProfileFr
         btn_skip= (Button) findViewById(R.id.btn_skip);
     }
     private void addEvent() {
-        tv_name.setText(SignInActivity.person.getName()+"");
+
+//        roof.child("database").child("Person").child(SignInActivity.person.getId()).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Person c=dataSnapshot.getValue(Person.class);
+//                String avatar=c.getImage();
+//                if(avatar!=null)
+//                    //Toast.makeText(ChooseAvatarActivity.this,"da co avatar",Toast.LENGTH_SHORT).show();
+//                    Glide.with(ChooseAvatarActivity.this).load(avatar).thumbnail(0.5f)
+//                            .crossFade()
+//                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                            .into(circleImageView);
+//                else
+//                    Toast.makeText(ChooseAvatarActivity.this,"chua co avatar",Toast.LENGTH_SHORT).show();
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(FirebaseError firebaseError) {
+//
+//            }
+//        });
+        tv_name.setText(SignInActivity.person.getName());
 
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,8 +149,7 @@ public class ChooseAvatarActivity extends AppCompatActivity implements ProfileFr
 
                 Map<String, Object> childUpdates = new HashMap<String, Object>() ;
                 childUpdates.put("avatar",downloadUrl.toString());
-                if(key!=null)
-                    roof.child("database").child("Person").child(key).updateChildren(childUpdates);
+                roof.child("database").child("Person").child(SignInActivity.person.getId()).updateChildren(childUpdates);
 
                 progressDialog.dismiss();
 

@@ -23,22 +23,35 @@
         <activity android:name=".activity.WelcomActivity">
 
         </activity>
-        <activity android:name=".activity.SignInActivity">
-
-        </activity>
-
-        <activity android:name=".activity.ChooseAvatarActivity"/>
-
-        <activity android:name=".activity.ContactFriendActivity">
-
-            </activity>
-
-        <activity android:name=".activity.MapsActivity">
+        <activity android:name=".activity.SignInActivity"
+            android:label="SignIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
+        </activity>
+
+        <activity android:name=".activity.ChooseAvatarActivity"
+            android:label="ChooseAvatar"/>
+
+        <activity android:name=".activity.ContactFriendActivity"
+            android:label="Contact">
+
+            </activity>
+
+        <activity android:name=".activity.MapsActivity"
+            android:label="Maps">
+
+        </activity>
+
+        <activity android:name=".activity.MainActivity"
+            android:label="Main">
+
+
+
         </activity>
 
         <meta-data
