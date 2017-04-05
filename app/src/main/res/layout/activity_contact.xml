@@ -2,34 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_marginTop="4dp"
-        android:text="@string/Location"
-        android:textColor="#008000"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtLocation" />
-
-    <TextView
-        android:layout_marginTop="4dp"
-        android:text="@string/contact"
-        android:textColor="#008000"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtLocation"
-        android:id="@+id/txtSP" />
-
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/txtSP"
         android:scrollbars="vertical" >
     </android.support.v7.widget.RecyclerView>
 

@@ -14,10 +14,6 @@ public class Person {
     public Person() {
     }
 
-    public Person(String id, String name){
-        this.id=id;
-        this.name=name;
-    }
 
     public String getImage() {
         return avatar;

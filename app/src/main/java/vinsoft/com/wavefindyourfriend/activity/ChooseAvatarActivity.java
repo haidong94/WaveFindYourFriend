@@ -118,7 +118,7 @@ public class ChooseAvatarActivity extends AppCompatActivity implements ProfileFr
         btn_skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(ChooseAvatarActivity.this,ContactFriendActivity.class);
+                Intent intent=new Intent(ChooseAvatarActivity.this,MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -153,7 +153,7 @@ public class ChooseAvatarActivity extends AppCompatActivity implements ProfileFr
 
                 progressDialog.dismiss();
 
-                Intent intent=new Intent(ChooseAvatarActivity.this, ContactFriendActivity.class);
+                Intent intent=new Intent(ChooseAvatarActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });

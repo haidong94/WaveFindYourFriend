@@ -22,7 +22,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -54,7 +53,7 @@ public class ContactFragment extends Fragment {
 
     ArrayList<String> listFriend;
     Firebase roof;
-    TextView txtLocation;
+  //  TextView txtLocation;
     double latitude,longitude;
 
     @Nullable
@@ -132,7 +131,7 @@ public class ContactFragment extends Fragment {
         listContact=new ArrayList<Contact>();
         listFriend=new ArrayList<String>();
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
-        txtLocation= (TextView) view.findViewById(R.id.txtLocation);
+//        txtLocation= (TextView) view.findViewById(R.id.txtLocation);
         ln = (LinearLayout) view.findViewById(R.id.rlt);
 
         Firebase.setAndroidContext(view.getContext());
@@ -249,7 +248,7 @@ public class ContactFragment extends Fragment {
             if (location != null) {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
-                txtLocation.setText("vi tri: "+latitude+"\n"+longitude);
+               // txtLocation.setText("vi tri: "+latitude+"\n"+longitude);
 
             }
             locationManager.requestLocationUpdates(provider, 1000, 0,
@@ -258,7 +257,7 @@ public class ContactFragment extends Fragment {
                         public void onLocationChanged(Location location) {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
-                            txtLocation.setText("vi tri: "+latitude+"\n"+longitude);
+                           // txtLocation.setText("vi tri: "+latitude+"\n"+longitude);
                         }
                         public void onProviderDisabled(String provider) {}
 

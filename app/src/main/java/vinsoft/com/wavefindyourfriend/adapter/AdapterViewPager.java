@@ -12,9 +12,15 @@ import java.util.List;
 
 public class AdapterViewPager extends FragmentStatePagerAdapter {
     List<Fragment> fragments;
+    private final String[] TITLES = {  "Chat","Contact" };
     public AdapterViewPager(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
         this.fragments=fragments;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return TITLES[position];
     }
 
     @Override

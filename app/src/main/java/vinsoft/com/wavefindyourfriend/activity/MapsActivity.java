@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,29 +26,32 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import vinsoft.com.wavefindyourfriend.R;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private Location mLastLocation;
-    public LocationManager mLocationManager;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
-    private GoogleApiClient mGoogleApiClient;
     Firebase roof;
     TextView tvlocation;
+    double latitude,longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         tvlocation= (TextView) findViewById(R.id.tv_location);
+        Firebase.setAndroidContext(this);
+        roof=new Firebase("https://chatandmap.firebaseio.com");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
 
     }
 
@@ -162,11 +164,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         List<String> providers = locationManager.getProviders(true);
         for (String provider : providers) {
+
+            Location location = locationManager.getLastKnownLocation(provider);
+            if (location != null) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                tvlocation.setText("vi tri"+latitude+","+longitude);
+            }
+
             locationManager.requestLocationUpdates(provider, 1000, 0,
                     new LocationListener() {
 
                         public void onLocationChanged(Location location) {
-                            tvlocation.setText("vi tri"+location.getLatitude()+","+location.getLongitude());
+                             latitude = location.getLatitude();
+                            longitude = location.getLongitude();
+                            tvlocation.setText("vi tri"+latitude+","+longitude);
                         }
 
                         public void onProviderDisabled(String provider) {}
@@ -176,13 +188,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         public void onStatusChanged(String provider, int status,
                                                     Bundle extras) {}
                     });
-            Location location = locationManager.getLastKnownLocation(provider);
-            if (location != null) {
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-                tvlocation.setText("vi tri"+latitude+","+longitude);
-            }
+
         }
+
+        Map<String, Object> childUpdates = new HashMap<String, Object>() ;
+        childUpdates.put("latitude",latitude);
+        childUpdates.put("longitude",longitude);
+        roof.child("database").child("Location").child(SignInActivity.person.getId()).updateChildren(childUpdates);
     }
 
 
