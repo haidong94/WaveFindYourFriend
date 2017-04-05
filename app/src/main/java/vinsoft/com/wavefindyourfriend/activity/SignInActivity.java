@@ -247,7 +247,7 @@ public class SignInActivity extends AppCompatActivity {
 
                             Toast.makeText(SignInActivity.this, getResources().getString(R.string.LoginSuccesfull), Toast.LENGTH_SHORT).show();
                             condition++;//condition=2
-                            Intent intent=new Intent(SignInActivity.this,MainActivity.class);
+                            Intent intent=new Intent(SignInActivity.this,ChooseAvatarActivity.class);
                             startActivity(intent);
 
                             finish();

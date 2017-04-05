@@ -65,9 +65,14 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Person c=dataSnapshot.getValue(Person.class);
                         String url=c.getImage();
-                        Glide.with(context).load(url).thumbnail(0.5f)
-                                .crossFade().diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .into(holder.avatar);
+                        if(url==null)
+                            holder.avatar.setImageResource(R.drawable.ic_profile_);
+                        else
+                        {
+                            Glide.with(context).load(url).thumbnail(0.5f)
+                                    .crossFade().diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .into(holder.avatar);
+                        }
                        //
                     }
 

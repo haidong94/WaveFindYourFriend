@@ -100,9 +100,13 @@ public class MainActivity extends AppCompatActivity
         txtPhone.setText(SignInActivity.person.getId());
        // imageAvatar.setImageResource(R.drawable.ic_profile_);
 
-        Glide.with(this).load(SignInActivity.person.getImage()).thumbnail(0.5f)
-                .crossFade().diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imageAvatar);
+        if(SignInActivity.person.getImage()==null)
+            imageAvatar.setImageResource(R.drawable.ic_profile_);
+        else {
+            Glide.with(this).load(SignInActivity.person.getImage()).thumbnail(0.5f)
+                    .crossFade().diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imageAvatar);
+        }
 
     }
 
