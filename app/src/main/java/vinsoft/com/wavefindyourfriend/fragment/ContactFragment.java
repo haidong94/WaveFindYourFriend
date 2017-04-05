@@ -59,7 +59,7 @@ public class ContactFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.activity_contact,container,false);
+        View view=inflater.inflate(R.layout.fragment_contact,container,false);
         checkPermission();
 
         addControl(view);

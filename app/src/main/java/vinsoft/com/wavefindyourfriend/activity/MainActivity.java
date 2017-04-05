@@ -27,7 +27,7 @@ import java.util.List;
 
 import vinsoft.com.wavefindyourfriend.R;
 import vinsoft.com.wavefindyourfriend.adapter.AdapterViewPager;
-import vinsoft.com.wavefindyourfriend.fragment.ChatFramgent;
+import vinsoft.com.wavefindyourfriend.fragment.ChatFragment;
 import vinsoft.com.wavefindyourfriend.fragment.ContactFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -80,10 +80,10 @@ public class MainActivity extends AppCompatActivity
 
         fragments=new ArrayList<Fragment>();
 
-        ChatFramgent chatFramgent=new ChatFramgent();
+        ChatFragment chatFragment=new ChatFragment();
         ContactFragment contactFragment=new ContactFragment();
 
-        fragments.add(chatFramgent);
+        fragments.add(chatFragment);
         fragments.add(contactFragment);
 
         AdapterViewPager adapterViewPager=new AdapterViewPager(getSupportFragmentManager(),fragments);
