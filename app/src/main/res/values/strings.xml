@@ -19,7 +19,7 @@
     <string name="phoneIncorrect">The phone number is incorrect</string>
     <string name="contact">Danh Bạ</string>
     <string name="Location">Location</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
