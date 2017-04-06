@@ -5,20 +5,19 @@ package vinsoft.com.wavefindyourfriend.model;
  */
 
 public class Message  {
-    String messageID;
     String personSendID;
     String contentMessage;
-    String dateSend;
-    String timeSend;
     String messageVision;//trangj thai xem chua
 
-    public String getMessageID() {
-        return messageID;
+    public String getDateTime() {
+        return dateTime;
     }
 
-    public void setMessageID(String messageID) {
-        this.messageID = messageID;
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
+
+    String dateTime;
 
     public String getPersonSendID() {
         return personSendID;
@@ -36,21 +35,6 @@ public class Message  {
         this.contentMessage = contentMessage;
     }
 
-    public String getDateSend() {
-        return dateSend;
-    }
-
-    public void setDateSend(String dateSend) {
-        this.dateSend = dateSend;
-    }
-
-    public String getTimeSend() {
-        return timeSend;
-    }
-
-    public void setTimeSend(String timeSend) {
-        this.timeSend = timeSend;
-    }
 
     public String getMessageVision() {
         return messageVision;

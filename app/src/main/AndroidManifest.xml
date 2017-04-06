@@ -49,6 +49,11 @@
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity android:name=".activity.MessageActivity"
+            android:label="Chat">
+
+        </activity>
     </application>
 
 </manifest>

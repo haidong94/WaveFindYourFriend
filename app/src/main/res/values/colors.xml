@@ -5,4 +5,5 @@
     <color name="colorAccent">#ff4081</color>
     <color name="white">#FFFFFF</color>
     <color name="balck">#d8000000</color>
+    <color name="darker_gray">#7b7676</color>
 </resources>

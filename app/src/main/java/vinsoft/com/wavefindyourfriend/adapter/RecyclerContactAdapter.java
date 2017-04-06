@@ -1,6 +1,7 @@
 package vinsoft.com.wavefindyourfriend.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import vinsoft.com.wavefindyourfriend.R;
+import vinsoft.com.wavefindyourfriend.activity.MessageActivity;
 import vinsoft.com.wavefindyourfriend.model.Contact;
 import vinsoft.com.wavefindyourfriend.model.Person;
 
@@ -65,8 +67,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Person c=dataSnapshot.getValue(Person.class);
                         String url=c.getImage();
-                        if(url==null)
-                        {
+                        if(url==null) {
                             holder.avatar.setImageResource(R.drawable.ic_profile_);
                         }else
                         {
@@ -118,6 +119,10 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         @Override
         public void onClick(View v) {
             Toast.makeText(v.getContext(), "Clicked Country Position = " + getPosition(), Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(context, MessageActivity.class);
+            intent.putExtra("FriendID",list.get(getPosition()).getPhone());
+            context.startActivity(intent);
+
         }
     }
 }

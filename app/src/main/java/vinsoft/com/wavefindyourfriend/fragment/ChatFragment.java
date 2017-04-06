@@ -37,10 +37,10 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_chat,container,false);
 
-        addControl(view);
-        readFriendFromFireBase();
 
+        addControl(view);
         config();
+        readFriendFromFireBase();
 
         return view;
     }
@@ -55,13 +55,15 @@ public class ChatFragment extends Fragment {
     }
 
     private void inforFriend() {
+        listFriend.clear();
         for (String s:listPhone)
         {
             roof.child("database").child("Person").child(s).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Person c=dataSnapshot.getValue(Person.class);
-                    recyclerChatAdapter.addPerson(c);
+                    listFriend.add(c);
+                    recyclerChatAdapter.notifyDataSetChanged();
 
                 }
 
@@ -77,6 +79,7 @@ public class ChatFragment extends Fragment {
         roof.child("database").child("Chat").child(SignInActivity.person.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                listPhone.clear();
                 for(DataSnapshot data:dataSnapshot.getChildren()){
                     listPhone.add(data.getKey());
                 }

@@ -1,6 +1,7 @@
 package vinsoft.com.wavefindyourfriend.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import vinsoft.com.wavefindyourfriend.R;
+import vinsoft.com.wavefindyourfriend.activity.MessageActivity;
 import vinsoft.com.wavefindyourfriend.model.Person;
 
 /**
@@ -39,9 +41,15 @@ public class RecyclerChatAdapter extends RecyclerView.Adapter<RecyclerChatAdapte
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder_Message holder, int position) {
+//        if(listFriend.get(position).getName()==null)
+//        {
+//            holder.txtName.setText("chua ket ban");
+//        }
+//        else
         holder.txtName.setText(String.valueOf(listFriend.get(position).getName()));
       //  holder.txtMessage.setText(String.valueOf(listFriend.get(position).toString()));
-        if(listFriend.get(position).getImage()!=null)
+        String url=listFriend.get(position).getImage();
+        if(url!=null)
         {
             Glide.with(context).load(listFriend.get(position).getImage()).thumbnail(0.5f)
                     .crossFade().diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -51,10 +59,6 @@ public class RecyclerChatAdapter extends RecyclerView.Adapter<RecyclerChatAdapte
             holder.avatar.setImageResource(R.drawable.ic_profile_);
         }
 
-    }
-    public void addPerson(Person person){
-        listFriend.add(person);
-        this.notifyDataSetChanged();
     }
 
     @Override
@@ -80,6 +84,9 @@ public class RecyclerChatAdapter extends RecyclerView.Adapter<RecyclerChatAdapte
         @Override
         public void onClick(View v) {
             Toast.makeText(v.getContext(), "Clicked Country Position = " + getPosition(), Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(context, MessageActivity.class);
+            intent.putExtra("FriendID",listFriend.get(getPosition()).getId());
+            context.startActivity(intent);
         }
     }
 }
