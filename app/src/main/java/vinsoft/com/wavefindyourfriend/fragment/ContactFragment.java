@@ -50,7 +50,6 @@ public class ContactFragment extends Fragment {
     RecyclerContactAdapter recyclerContactAdapter;
     LinearLayoutManager linearLayoutManager;
     ArrayList<Contact> listContact;
-
     ArrayList<String> listFriend;
     Firebase roof;
   //  TextView txtLocation;

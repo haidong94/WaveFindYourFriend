@@ -36,7 +36,7 @@ public class MessageActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     RecyclerMessageApdapter messageApdapter;
 
-    String userID, groupId;
+    String userID,userName, groupId;
 
 
     @Override
@@ -46,6 +46,7 @@ public class MessageActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         userID=intent.getStringExtra("FriendID");
+        userName=intent.getStringExtra("FriendName");
         initWidget();
         getListChat();
         sendMessage();

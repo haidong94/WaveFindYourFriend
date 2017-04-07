@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/contact"
-                android:padding="10dp"
+                android:maxLines="1"
                 android:gravity="center"/>
 
             <ImageView

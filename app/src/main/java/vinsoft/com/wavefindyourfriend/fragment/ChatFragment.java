@@ -30,8 +30,8 @@ public class ChatFragment extends Fragment {
     RecyclerChatAdapter recyclerChatAdapter;
     LinearLayoutManager linearLayoutManager;
     RecyclerView recyclerView;
-    ArrayList<Person> listFriend;
-    ArrayList<String> listPhone;
+    ArrayList<Person> listPerson;
+    ArrayList<String> listChat;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,20 +49,19 @@ public class ChatFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerChatAdapter = new RecyclerChatAdapter(getContext(),listFriend);
+        recyclerChatAdapter = new RecyclerChatAdapter(getContext(),listPerson,listChat);
         recyclerView.setAdapter(recyclerChatAdapter);
 
     }
 
     private void inforFriend() {
-        listFriend.clear();
-        for (String s:listPhone)
-        {
-            roof.child("database").child("Person").child(s).addValueEventListener(new ValueEventListener() {
+            roof.child("database").child("Person").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Person c=dataSnapshot.getValue(Person.class);
-                    listFriend.add(c);
+                    for(DataSnapshot data:dataSnapshot.getChildren()){
+                        Person c=data.getValue(Person.class);
+                        listPerson.add(c);
+                    }
                     recyclerChatAdapter.notifyDataSetChanged();
 
                 }
@@ -72,16 +71,16 @@ public class ChatFragment extends Fragment {
 
                 }
             });
-        }
     }
 
     private void readFriendFromFireBase() {
         roof.child("database").child("Chat").child(SignInActivity.person.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                listPhone.clear();
+                listChat.clear();
+                listPerson.clear();
                 for(DataSnapshot data:dataSnapshot.getChildren()){
-                    listPhone.add(data.getKey());
+                    listChat.add(data.getKey());
                 }
                 inforFriend();
 
@@ -99,8 +98,8 @@ public class ChatFragment extends Fragment {
     private void addControl(View view) {
         Firebase.setAndroidContext(getContext());
         roof=new Firebase("https://chatandmap.firebaseio.com");
-        listFriend=new ArrayList<Person>();
-        listPhone=new ArrayList<String>();
+        listPerson=new ArrayList<Person>();
+        listChat=new ArrayList<String>();
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
     }
 }

@@ -24,12 +24,14 @@ import vinsoft.com.wavefindyourfriend.model.Person;
  */
 
 public class RecyclerChatAdapter extends RecyclerView.Adapter<RecyclerChatAdapter.RecyclerViewHolder_Message> {
-    private List<Person> listFriend;
+    private List<Person> listPerson;
+    private List<String> listChat;
     private Context context;
 
-    public RecyclerChatAdapter(Context context, List<Person> listFriend){
+    public RecyclerChatAdapter(Context context, List<Person> listPerson,List<String> listChat){
         this.context=context;
-        this.listFriend=listFriend;
+        this.listPerson=listPerson;
+        this.listChat=listChat;
 
     }
     @Override
@@ -41,29 +43,41 @@ public class RecyclerChatAdapter extends RecyclerView.Adapter<RecyclerChatAdapte
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder_Message holder, int position) {
-//        if(listFriend.get(position).getName()==null)
-//        {
-//            holder.txtName.setText("chua ket ban");
-//        }
-//        else
-        holder.txtName.setText(String.valueOf(listFriend.get(position).getName()));
-      //  holder.txtMessage.setText(String.valueOf(listFriend.get(position).toString()));
-        String url=listFriend.get(position).getImage();
-        if(url!=null)
+        String chat=listChat.get(position);
+
+        for(Person person:listPerson)
         {
-            Glide.with(context).load(listFriend.get(position).getImage()).thumbnail(0.5f)
-                    .crossFade().diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(holder.avatar);
+            if(person.getId().equals(chat))
+            {
+                holder.txtName.setText(String.valueOf(person.getName()));
+                holder.txtVision.setText("Da xem");
+                //  holder.txtMessage.setText(String.valueOf(listFriend.get(position).toString()));
+                String url=person.getImage();
+                if(url!=null)
+                {
+                    Glide.with(context).load(person.getImage()).thumbnail(0.5f)
+                            .crossFade().diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(holder.avatar);
+                }
+                else {
+                    holder.avatar.setImageResource(R.drawable.ic_profile_);
+                }
+                break;
+            }
+            else
+            {
+                holder.avatar.setImageResource(R.drawable.ic_profile_);
+                holder.txtName.setText(chat);
+                holder.txtVision.setText(R.string.addFriend);
+            }
         }
-        else {
-            holder.avatar.setImageResource(R.drawable.ic_profile_);
-        }
+
 
     }
 
     @Override
     public int getItemCount() {
-        return listFriend.size();
+        return listChat.size();
     }
 
     public class RecyclerViewHolder_Message extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -85,7 +99,7 @@ public class RecyclerChatAdapter extends RecyclerView.Adapter<RecyclerChatAdapte
         public void onClick(View v) {
             Toast.makeText(v.getContext(), "Clicked Country Position = " + getPosition(), Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(context, MessageActivity.class);
-            intent.putExtra("FriendID",listFriend.get(getPosition()).getId());
+            intent.putExtra("FriendID",listChat.get(getPosition()).toString());
             context.startActivity(intent);
         }
     }
