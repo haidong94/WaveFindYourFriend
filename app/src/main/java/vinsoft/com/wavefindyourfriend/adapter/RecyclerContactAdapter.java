@@ -120,7 +120,7 @@ public class RecyclerContactAdapter extends RecyclerView.Adapter<RecyclerContact
         public void onClick(View v) {
             Toast.makeText(v.getContext(), "Clicked Country Position = " + getPosition(), Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(context, MessageActivity.class);
-            intent.putExtra("FriendID",list.get(getPosition()).getPhone());
+            intent.putExtra("GroupID",list.get(getPosition()).getPhone());
             intent.putExtra("FriendName",list.get(getPosition()).getName());
             context.startActivity(intent);
 

@@ -25,7 +25,7 @@ import vinsoft.com.wavefindyourfriend.model.Person;
  * Created by DONG on 04-Apr-17.
  */
 
-public class ChatFragment extends Fragment {
+public class ChatFragment extends Fragment  {
     Firebase roof;
     RecyclerChatAdapter recyclerChatAdapter;
     LinearLayoutManager linearLayoutManager;
@@ -63,7 +63,6 @@ public class ChatFragment extends Fragment {
                         listPerson.add(c);
                     }
                     recyclerChatAdapter.notifyDataSetChanged();
-
                 }
 
                 @Override
@@ -74,17 +73,65 @@ public class ChatFragment extends Fragment {
     }
 
     private void readFriendFromFireBase() {
-        roof.child("database").child("Chat").child(SignInActivity.person.getId()).addValueEventListener(new ValueEventListener() {
+        roof.child("database").child("Groupp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                listChat.clear();
                 listPerson.clear();
-                for(DataSnapshot data:dataSnapshot.getChildren()){
-                    listChat.add(data.getKey());
+                listChat.clear();
+                for(DataSnapshot data:dataSnapshot.getChildren())
+                {
+                    final String key=data.getKey();
+                    roof.child("database").child("Groupp").child(key).child("Member").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot data:dataSnapshot.getChildren())
+                            {
+                                String id=data.getKey();
+                                if(id.equals(SignInActivity.person.getId()))
+                                {
+                                    int condition=0;
+                                    if (listChat.size() == 0)
+                                        listChat.add(key);
+
+                                    for (String s:listChat) {
+                                        if (key.equals(s)) {
+                                           condition=1;
+                                            break;
+                                        }
+                                    }
+
+                                    if (condition==0)
+                                        listChat.add(key);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
                 }
+
+//                for(String s:listChat)
+//                {
+//                    ConnectFirebase.getConnect(getContext()).child("database").child("Groupp").child(s).child("Conversation").orderByKey().limitToLast(1).addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        for(DataSnapshot data:dataSnapshot.getChildren())
+//                        {
+//                            Message message=data.getValue(Message.class);
+//                            String time=Util.getHours(Long.parseLong(message.getDateTime()));
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(FirebaseError firebaseError) {
+//
+//                    }
+//                });
+//                }
                 inforFriend();
-
-
             }
 
             @Override
@@ -93,13 +140,15 @@ public class ChatFragment extends Fragment {
             }
         });
 
+
+
     }
 
     private void addControl(View view) {
         Firebase.setAndroidContext(getContext());
         roof=new Firebase("https://chatandmap.firebaseio.com");
         listPerson=new ArrayList<Person>();
-        listChat=new ArrayList<String>();
+        listChat=new ArrayList<>();
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
     }
 }

@@ -8,6 +8,16 @@ public class Message  {
     String personSendID;
     String contentMessage;
     String messageVision;//trangj thai xem chua
+    String groupID;
+
+    public String getGroupID() {
+        return groupID;
+    }
+
+    public void setGroupID(String groupID) {
+        this.groupID = groupID;
+    }
+
 
     public String getDateTime() {
         return dateTime;

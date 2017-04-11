@@ -16,6 +16,8 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import vinsoft.com.wavefindyourfriend.R;
 import vinsoft.com.wavefindyourfriend.adapter.RecyclerMessageApdapter;
@@ -45,7 +47,7 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message);
 
         Intent intent=getIntent();
-        userID=intent.getStringExtra("FriendID");
+        userID=intent.getStringExtra("GroupID");
         userName=intent.getStringExtra("FriendName");
         initWidget();
         getListChat();
@@ -63,7 +65,12 @@ public class MessageActivity extends AppCompatActivity {
                 edtMessage.getText().clear();
                 message.setDateTime(String.valueOf(System.currentTimeMillis()));
 
-                ConnectFirebase.getConnect(MessageActivity.this).child("database").child("Chat").child(SignInActivity.person.getId()).child(userID).child(String.valueOf(System.currentTimeMillis())).setValue(message);
+                ConnectFirebase.getConnect(MessageActivity.this).child("database").child("Groupp").child(userID).child("Conversation").child(String.valueOf(System.currentTimeMillis())).setValue(message);
+
+                Map<String, Object> childUpdates = new HashMap<String, Object>() ;
+                childUpdates.put(userID,true);
+                childUpdates.put(SignInActivity.person.getId(),true);
+                ConnectFirebase.getConnect(MessageActivity.this).child("database").child("Groupp").child(userID).child("Member").updateChildren(childUpdates);
             }
         });
 
@@ -82,7 +89,7 @@ public class MessageActivity extends AppCompatActivity {
 
     private void getListChat() {
         Firebase roof=ConnectFirebase.getConnect(this);
-        roof.child("database").child("Chat").child(SignInActivity.person.getId()).child(userID).addValueEventListener(new ValueEventListener() {
+        roof.child("database").child("Groupp").child(userID).child("Conversation").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 listChatHistory.clear();

@@ -29,4 +29,6 @@
     <string name="txt_copy">Copy</string>
     <string name="txt_delete">Delete</string>
     <string name="addFriend">Add Friend</string>
+    <string name="title_fragment1">Chat</string>
+    <string name="title_fragment2">Contact</string>
 </resources>

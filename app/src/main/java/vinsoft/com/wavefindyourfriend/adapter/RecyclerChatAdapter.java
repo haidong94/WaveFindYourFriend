@@ -11,12 +11,18 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import vinsoft.com.wavefindyourfriend.R;
 import vinsoft.com.wavefindyourfriend.activity.MessageActivity;
+import vinsoft.com.wavefindyourfriend.common.ConnectFirebase;
+import vinsoft.com.wavefindyourfriend.common.Util;
+import vinsoft.com.wavefindyourfriend.model.Message;
 import vinsoft.com.wavefindyourfriend.model.Person;
 
 /**
@@ -42,7 +48,7 @@ public class RecyclerChatAdapter extends RecyclerView.Adapter<RecyclerChatAdapte
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewHolder_Message holder, int position) {
+    public void onBindViewHolder(final RecyclerViewHolder_Message holder, int position) {
         String chat=listChat.get(position);
 
         for(Person person:listPerson)
@@ -50,7 +56,7 @@ public class RecyclerChatAdapter extends RecyclerView.Adapter<RecyclerChatAdapte
             if(person.getId().equals(chat))
             {
                 holder.txtName.setText(String.valueOf(person.getName()));
-                holder.txtVision.setText("Da xem");
+
                 //  holder.txtMessage.setText(String.valueOf(listFriend.get(position).toString()));
                 String url=person.getImage();
                 if(url!=null)
@@ -68,9 +74,26 @@ public class RecyclerChatAdapter extends RecyclerView.Adapter<RecyclerChatAdapte
             {
                 holder.avatar.setImageResource(R.drawable.ic_profile_);
                 holder.txtName.setText(chat);
-                holder.txtVision.setText(R.string.addFriend);
+
             }
         }
+
+        ConnectFirebase.getConnect(context).child("database").child("Groupp").child(chat).child("Conversation").orderByKey().limitToLast(1).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot data:dataSnapshot.getChildren())
+                {
+                    Message message=data.getValue(Message.class);
+                    holder.txtMessage.setText(message.getContentMessage());
+                    holder.txtVision.setText(Util.getHours(Long.parseLong(message.getDateTime())));
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
 
     }
@@ -99,7 +122,7 @@ public class RecyclerChatAdapter extends RecyclerView.Adapter<RecyclerChatAdapte
         public void onClick(View v) {
             Toast.makeText(v.getContext(), "Clicked Country Position = " + getPosition(), Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(context, MessageActivity.class);
-            intent.putExtra("FriendID",listChat.get(getPosition()).toString());
+            intent.putExtra("GroupID",listChat.get(getPosition()).toString());
             context.startActivity(intent);
         }
     }
